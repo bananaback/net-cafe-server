@@ -1,6 +1,9 @@
 package dev.bananaftmeo.netcafeserver.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +14,7 @@ import dev.bananaftmeo.netcafeserver.models.requests.RegisterRequest;
 import dev.bananaftmeo.netcafeserver.repositories.UserRepository;
 
 @Service
-public class UserService implements IUserService {
+public class UserService implements IUserService, UserDetailsService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -24,10 +27,15 @@ public class UserService implements IUserService {
             throw new UserRegistrationException(
                     "User with username " + registerRequest.getUsername() + " already exist.");
         }
-        existingUser = userRepository.findByPhoneNumber(registerRequest.getUsername());
+        existingUser = userRepository.findByPhoneNumber(registerRequest.getPhoneNumber());
         if (existingUser != null) {
             throw new UserRegistrationException(
                     "User with phone number " + registerRequest.getPhoneNumber() + " already exist.");
+        }
+        existingUser = userRepository.findByEmail(registerRequest.getEmail());
+        if (existingUser != null) {
+            throw new UserRegistrationException(
+                    "User with email " + registerRequest.getEmail() + " already exist.");
         }
         existingUser = userRepository.findByIdentityNumber(registerRequest.getIdentityNumber());
         if (existingUser != null) {
@@ -43,6 +51,15 @@ public class UserService implements IUserService {
                 passwordEncoder.encode(registerRequest.getPassword()),
                 RoleEnum.USER);
         userRepository.save(user);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        ApplicationUser user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException(username);
+        }
+        return user;
     }
 
 }
