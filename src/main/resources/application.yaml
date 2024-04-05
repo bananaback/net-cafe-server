@@ -11,3 +11,11 @@ spring:
         properties:
             hibernate:
                 dialect: org.hibernate.dialect.SQLServerDialect
+
+jwt:
+    access_token:
+        secret: "9tlwHss_-1Gyj7PBDGlnTJdov7rSLwvp6x8S5Q6dUfVkyiQW2ljJ2iQKsqIpsvNiEU7cqRFXSZ_87-Fz27kN1Fc8YJXX-7BEjvz25RuruyzIBB6BrRsiZq9hLGXNaFOYyH_xoRo9MQV7exOP91rsYNcz0HMCyuW1N6XGRiUR9bk"
+        expiration_minutes: 0.25
+    refresh_token:
+        secret: "zp7iA9kBvZ1Pz2AmsXgtXr3dGcQE6hZPHn4jfexj1gk-geBRH7Cwq1-X0bDrNdGXR4jZ7EjNCRNz4kn1Tp8bMvOqUAeeYyVgWQc0eDFk8hbKACc7YW_r7Dgtby6W0gQEPpL4QVvldb2aoI-6eaxUwGV6OrJrf7lWrotytJzUYIE"
+        expiration_minutes: 80803
