@@ -10,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthenticatedUserResponse {
-    private String message;
+    private boolean isSuccess;
     private String accessToken;
+    private String refreshToken;
 }

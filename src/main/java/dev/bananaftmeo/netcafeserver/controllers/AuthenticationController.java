@@ -69,10 +69,12 @@ public class AuthenticationController {
                     .body(new ErrorResponse("Validation error: " + bindingResult.getAllErrors()));
         }
         try {
-            AuthenticatedUserResponse authenticatedUserResponse = new AuthenticatedUserResponse("Login success.",
-                    authenticationService.loginUser(loginRequest));
-
-            return ResponseEntity.ok().body(authenticatedUserResponse);
+            AuthenticatedUserResponse authenticatedUserResponse = authenticationService.loginUser(loginRequest);
+            if (authenticatedUserResponse.isSuccess()) {
+                return ResponseEntity.ok().body(authenticatedUserResponse);
+            } else {
+                return ResponseEntity.badRequest().body(new ErrorResponse("Login failed: invalid credentials."));
+            }
         } catch (UserAuthenticationException e) {
             return ResponseEntity.badRequest().body(new ErrorResponse("Login failed: " + e.getErrrorMessage()));
         }

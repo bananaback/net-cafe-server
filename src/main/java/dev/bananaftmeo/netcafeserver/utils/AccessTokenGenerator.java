@@ -5,9 +5,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import dev.bananaftmeo.netcafeserver.models.ApplicationUser;
+import dev.bananaftmeo.netcafeserver.utils.tokengenerators.ITokenGenerator;
 
 @Component
-public class AccessTokenGenerator {
+public class AccessTokenGenerator implements ITokenGenerator {
     @Value("${jwt.access_token.secret}")
     private String jwtSecret;
 
@@ -16,7 +17,7 @@ public class AccessTokenGenerator {
     @Autowired
     private TokenGenerator tokenGenerator;
 
-    public String generateAccessToken(ApplicationUser user) {
+    public String generateToken(ApplicationUser user) {
         return tokenGenerator.generateJwt(user, jwtSecret, jwtExpirationMinutes);
     }
 }
