@@ -6,11 +6,14 @@ import org.springframework.web.bind.annotation.RestController;
 import dev.bananaftmeo.netcafeserver.exceptions.UserAuthenticationException;
 import dev.bananaftmeo.netcafeserver.exceptions.UserRegistrationException;
 import dev.bananaftmeo.netcafeserver.models.requests.LoginRequest;
+import dev.bananaftmeo.netcafeserver.models.requests.RefreshRequest;
 import dev.bananaftmeo.netcafeserver.models.requests.RegisterRequest;
 import dev.bananaftmeo.netcafeserver.models.responses.AuthenticatedUserResponse;
 import dev.bananaftmeo.netcafeserver.models.responses.ErrorResponse;
 import dev.bananaftmeo.netcafeserver.services.IAuthenticationService;
+import dev.bananaftmeo.netcafeserver.services.IRefreshTokenService;
 import dev.bananaftmeo.netcafeserver.services.IUserService;
+import dev.bananaftmeo.netcafeserver.utils.tokenvalidators.RefreshTokenValidator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +31,10 @@ public class AuthenticationController {
     private IUserService userService;
     @Autowired
     private IAuthenticationService authenticationService;
+    @Autowired
+    private RefreshTokenValidator refreshTokenValidator;
+    @Autowired
+    private IRefreshTokenService refreshTokenService;
 
     @GetMapping("/hittest")
     public ResponseEntity<?> testReached() {
@@ -80,4 +87,26 @@ public class AuthenticationController {
         }
     }
 
+    @PostMapping("/refresh")
+    public ResponseEntity<?> rotateToken(@Validated @RequestBody RefreshRequest refreshRequest,
+            BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            // Handle validation errors
+            return ResponseEntity.badRequest()
+                    .body(new ErrorResponse("Validation error: " + bindingResult.getAllErrors()));
+        }
+
+        boolean isValidRefreshToken = refreshTokenValidator.validateToken(refreshRequest.getRefreshToken());
+        if (!isValidRefreshToken) {
+            return ResponseEntity.badRequest().body(new ErrorResponse("Invalid refresh token."));
+        }
+
+        try {
+            AuthenticatedUserResponse authenticatedUserResponse = refreshTokenService
+                    .rotateToken(refreshRequest.getRefreshToken());
+            return ResponseEntity.ok().body(authenticatedUserResponse);
+        } catch (UserAuthenticationException e) {
+            return ResponseEntity.badRequest().body(new ErrorResponse(e.getErrrorMessage()));
+        }
+    }
 }
