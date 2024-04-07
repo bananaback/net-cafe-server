@@ -35,4 +35,9 @@ public class RefreshTokenService implements IRefreshTokenService {
         return authenticator.authenticate(user.get());
     }
 
+    @Override
+    public void deleteAllRefreshTokenOfUser(Long userId) {
+        refreshTokenRepository.deleteAllByUserId(userId);
+    }
+
 }

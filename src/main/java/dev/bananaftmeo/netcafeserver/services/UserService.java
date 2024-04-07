@@ -62,4 +62,9 @@ public class UserService implements IUserService, UserDetailsService {
         return user;
     }
 
+    @Override
+    public ApplicationUser findUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
 }

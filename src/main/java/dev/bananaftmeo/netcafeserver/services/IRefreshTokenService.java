@@ -5,4 +5,6 @@ import dev.bananaftmeo.netcafeserver.models.responses.AuthenticatedUserResponse;
 
 public interface IRefreshTokenService {
     AuthenticatedUserResponse rotateToken(String refreshToken) throws UserAuthenticationException;
+
+    void deleteAllRefreshTokenOfUser(Long userId);
 }
