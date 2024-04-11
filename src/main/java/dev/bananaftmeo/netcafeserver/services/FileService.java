@@ -8,6 +8,8 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -24,10 +26,11 @@ import com.google.cloud.storage.StorageOptions;
 @Service
 public class FileService implements IFileService {
     private String DOWNLOAD_URL = "https://firebasestorage.googleapis.com/v0/b/fir-resources-hosting.appspot.com/o/%s?alt=media";
+    private final String BUCKET_NAME = "fir-resources-hosting.appspot.com";
 
     @Override
     public String uploadFile(File file, String fileName) throws IOException {
-        BlobId blobId = BlobId.of("fir-resources-hosting.appspot.com", fileName);
+        BlobId blobId = BlobId.of(BUCKET_NAME, fileName);
         BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("media").build();
         Credentials credentials;
         credentials = GoogleCredentials
@@ -67,11 +70,14 @@ public class FileService implements IFileService {
     }
 
     @Override
-    public void download(String fileName) throws IOException {
-        String destFileName = UUID.randomUUID().toString().concat(this.getExtension(fileName)); // to set random string
-                                                                                                // for destination file
-                                                                                                // name
-        String destFilePath = "D:\\netcafeserver-imgs\\" + destFileName; // to set destination file path
+    public Blob download(String fileName) throws IOException {
+        // String destFileName =
+        // UUID.randomUUID().toString().concat(this.getExtension(fileName)); // to set
+        // random string
+        // for destination file
+        // name
+        // String destFilePath = "D:\\netcafeserver-imgs\\" + destFileName; // to set
+        // destination file path
 
         //////////////////////////////// Download
         //////////////////////////////// ////////////////////////////////////////////////////////////////////////
@@ -79,8 +85,39 @@ public class FileService implements IFileService {
                 .fromStream(new FileInputStream(
                         "src/main/resources/fir-resources-hosting-firebase-adminsdk-dxxok-2f8a829e7e.json"));
         Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
-        Blob blob = storage.get(BlobId.of("fir-resources-hosting.appspot.com", fileName));
-        blob.downloadTo(Paths.get(destFilePath));
+        Blob blob = storage.get(BlobId.of(BUCKET_NAME, fileName));
+        // blob.downloadTo(Paths.get(destFilePath));
+        return blob;
     }
 
+    @Override
+    public List<String> getAllImageNames(int page, int pageSize) throws IOException {
+        // Load credentials from JSON file
+        Credentials credentials = GoogleCredentials
+                .fromStream(new FileInputStream(
+                        "src/main/resources/fir-resources-hosting-firebase-adminsdk-dxxok-2f8a829e7e.json"));
+
+        // Create a storage instance with the loaded credentials
+        Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
+
+        // Get all blobs in the bucket
+        Iterable<Blob> blobs = storage.list(BUCKET_NAME).iterateAll();
+
+        // Initialize a list to store image filenames
+        List<String> imageNames = new ArrayList<>();
+
+        // Iterate through blobs and add image filenames to the list
+        for (Blob blob : blobs) {
+            if (blob.getName().toLowerCase().endsWith(".jpg") || blob.getName().toLowerCase().endsWith(".png")) {
+                String[] parts = blob.getName().split("/");
+                String filename = parts[parts.length - 1];
+                imageNames.add(filename);
+            }
+        }
+
+        // Apply paging
+        int startIndex = page * pageSize;
+        int endIndex = Math.min(startIndex + pageSize, imageNames.size());
+        return imageNames.subList(startIndex, endIndex);
+    }
 }

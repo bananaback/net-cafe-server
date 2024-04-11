@@ -2,8 +2,11 @@ package dev.bananaftmeo.netcafeserver.services;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
+
+import com.google.cloud.storage.Blob;
 
 public interface IFileService {
     String uploadFile(File file, String fileName) throws IOException; // used to upload a file
@@ -15,5 +18,7 @@ public interface IFileService {
 
     String upload(MultipartFile multipartFile) throws IOException;
 
-    void download(String fileName) throws IOException;
+    Blob download(String fileName) throws IOException;
+
+    List<String> getAllImageNames(int page, int pageSize) throws IOException;
 }
