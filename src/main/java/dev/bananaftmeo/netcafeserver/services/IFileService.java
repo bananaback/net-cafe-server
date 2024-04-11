@@ -21,4 +21,7 @@ public interface IFileService {
     Blob download(String fileName) throws IOException;
 
     List<String> getAllImageNames(int page, int pageSize) throws IOException;
+
+    boolean delete(String fileName) throws IOException;
+
 }

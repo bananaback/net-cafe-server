@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -119,5 +118,28 @@ public class FileService implements IFileService {
         int startIndex = page * pageSize;
         int endIndex = Math.min(startIndex + pageSize, imageNames.size());
         return imageNames.subList(startIndex, endIndex);
+    }
+
+    @Override
+    public boolean delete(String fileName) throws IOException {
+        // Load credentials from JSON file
+        Credentials credentials = GoogleCredentials
+                .fromStream(new FileInputStream(
+                        "src/main/resources/fir-resources-hosting-firebase-adminsdk-dxxok-2f8a829e7e.json"));
+        // Create a storage instance with the loaded credentials
+        Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
+
+        // Get the BlobId of the file to delete
+        BlobId blobId = BlobId.of(BUCKET_NAME, fileName);
+
+        // Check if the file exists
+        if (storage.get(blobId) == null) {
+            return false; // File not found, return false
+        }
+
+        // Delete the file
+        storage.delete(blobId);
+
+        return true; // File deleted successfully
     }
 }
