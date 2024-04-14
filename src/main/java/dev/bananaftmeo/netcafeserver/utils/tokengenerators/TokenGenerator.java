@@ -1,4 +1,4 @@
-package dev.bananaftmeo.netcafeserver.utils;
+package dev.bananaftmeo.netcafeserver.utils.tokengenerators;
 
 import java.util.Date;
 

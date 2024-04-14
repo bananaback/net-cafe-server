@@ -1,4 +1,4 @@
-package dev.bananaftmeo.netcafeserver.services;
+package dev.bananaftmeo.netcafeserver.services.authenticationservices;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -9,7 +9,7 @@ import dev.bananaftmeo.netcafeserver.models.ApplicationUser;
 import dev.bananaftmeo.netcafeserver.models.RefreshToken;
 import dev.bananaftmeo.netcafeserver.models.responses.AuthenticatedUserResponse;
 import dev.bananaftmeo.netcafeserver.repositories.RefreshTokenRepository;
-import dev.bananaftmeo.netcafeserver.utils.AccessTokenGenerator;
+import dev.bananaftmeo.netcafeserver.utils.tokengenerators.AccessTokenGenerator;
 import dev.bananaftmeo.netcafeserver.utils.tokengenerators.RefreshTokenGenerator;
 
 @Component

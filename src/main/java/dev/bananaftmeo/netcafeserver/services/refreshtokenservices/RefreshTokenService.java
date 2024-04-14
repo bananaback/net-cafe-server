@@ -1,4 +1,4 @@
-package dev.bananaftmeo.netcafeserver.services;
+package dev.bananaftmeo.netcafeserver.services.refreshtokenservices;
 
 import java.util.Optional;
 
@@ -11,6 +11,7 @@ import dev.bananaftmeo.netcafeserver.models.RefreshToken;
 import dev.bananaftmeo.netcafeserver.models.responses.AuthenticatedUserResponse;
 import dev.bananaftmeo.netcafeserver.repositories.RefreshTokenRepository;
 import dev.bananaftmeo.netcafeserver.repositories.UserRepository;
+import dev.bananaftmeo.netcafeserver.services.authenticationservices.Authenticator;
 
 @Service
 public class RefreshTokenService implements IRefreshTokenService {

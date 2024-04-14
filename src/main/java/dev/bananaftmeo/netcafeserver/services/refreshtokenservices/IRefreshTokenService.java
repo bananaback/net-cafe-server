@@ -1,4 +1,4 @@
-package dev.bananaftmeo.netcafeserver.services;
+package dev.bananaftmeo.netcafeserver.services.refreshtokenservices;
 
 import dev.bananaftmeo.netcafeserver.exceptions.UserAuthenticationException;
 import dev.bananaftmeo.netcafeserver.models.responses.AuthenticatedUserResponse;

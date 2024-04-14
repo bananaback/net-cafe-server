@@ -1,4 +1,4 @@
-package dev.bananaftmeo.netcafeserver.services;
+package dev.bananaftmeo.netcafeserver.services.fileservices;
 
 import java.io.File;
 import java.io.FileInputStream;

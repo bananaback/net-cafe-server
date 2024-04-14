@@ -1,11 +1,10 @@
-package dev.bananaftmeo.netcafeserver.utils;
+package dev.bananaftmeo.netcafeserver.utils.tokengenerators;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import dev.bananaftmeo.netcafeserver.models.ApplicationUser;
-import dev.bananaftmeo.netcafeserver.utils.tokengenerators.ITokenGenerator;
 
 @Component
 public class AccessTokenGenerator implements ITokenGenerator {

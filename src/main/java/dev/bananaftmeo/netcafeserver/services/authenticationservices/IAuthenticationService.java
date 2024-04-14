@@ -1,4 +1,4 @@
-package dev.bananaftmeo.netcafeserver.services;
+package dev.bananaftmeo.netcafeserver.services.authenticationservices;
 
 import dev.bananaftmeo.netcafeserver.exceptions.UserAuthenticationException;
 import dev.bananaftmeo.netcafeserver.models.requests.LoginRequest;

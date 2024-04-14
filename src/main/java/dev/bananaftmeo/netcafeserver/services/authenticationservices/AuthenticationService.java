@@ -1,4 +1,4 @@
-package dev.bananaftmeo.netcafeserver.services;
+package dev.bananaftmeo.netcafeserver.services.authenticationservices;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
