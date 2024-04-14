@@ -25,7 +25,7 @@ import dev.bananaftmeo.netcafeserver.models.responses.ImageDeleteResponse;
 import dev.bananaftmeo.netcafeserver.models.responses.ImageNamesResponse;
 import dev.bananaftmeo.netcafeserver.models.responses.ImageResponse;
 import dev.bananaftmeo.netcafeserver.models.responses.ImageUploadResponse;
-import dev.bananaftmeo.netcafeserver.services.IFileService;
+import dev.bananaftmeo.netcafeserver.services.fileservices.IFileService;
 
 @RestController
 @RequestMapping("api/image")

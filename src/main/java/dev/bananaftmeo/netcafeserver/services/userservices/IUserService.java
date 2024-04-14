@@ -1,4 +1,4 @@
-package dev.bananaftmeo.netcafeserver.services;
+package dev.bananaftmeo.netcafeserver.services.userservices;
 
 import dev.bananaftmeo.netcafeserver.exceptions.UserRegistrationException;
 import dev.bananaftmeo.netcafeserver.models.ApplicationUser;

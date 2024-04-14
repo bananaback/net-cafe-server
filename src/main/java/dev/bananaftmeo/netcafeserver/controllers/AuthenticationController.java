@@ -11,9 +11,9 @@ import dev.bananaftmeo.netcafeserver.models.requests.RefreshRequest;
 import dev.bananaftmeo.netcafeserver.models.requests.RegisterRequest;
 import dev.bananaftmeo.netcafeserver.models.responses.AuthenticatedUserResponse;
 import dev.bananaftmeo.netcafeserver.models.responses.ErrorResponse;
-import dev.bananaftmeo.netcafeserver.services.IAuthenticationService;
-import dev.bananaftmeo.netcafeserver.services.IRefreshTokenService;
-import dev.bananaftmeo.netcafeserver.services.IUserService;
+import dev.bananaftmeo.netcafeserver.services.authenticationservices.IAuthenticationService;
+import dev.bananaftmeo.netcafeserver.services.refreshtokenservices.IRefreshTokenService;
+import dev.bananaftmeo.netcafeserver.services.userservices.IUserService;
 import dev.bananaftmeo.netcafeserver.utils.tokenvalidators.RefreshTokenValidator;
 
 import org.springframework.beans.factory.annotation.Autowired;
