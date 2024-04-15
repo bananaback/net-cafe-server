@@ -2,6 +2,8 @@ package dev.bananaftmeo.netcafeserver.models;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,5 +33,6 @@ public class ProductCategory {
     private String imageLink;
 
     @OneToMany(mappedBy = "productCategory", cascade = CascadeType.REMOVE)
+    @JsonIgnore
     Set<Product> products;
 }
