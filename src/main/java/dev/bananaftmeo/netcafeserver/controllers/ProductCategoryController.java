@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RestController
 @RequestMapping("api/productcategories")
 public class ProductCategoryController {
+    
     @Autowired
     private IProductCategoryService productCategoryService;
 
