@@ -90,7 +90,7 @@ public class ProductController {
             return ResponseEntity.ok().body("Update product successfully.");
         } catch (NoSuchElementException ex) {
             return ResponseEntity.badRequest()
-                    .body(new ErrorResponse("Product with id " + id + " does not exist."));
+                    .body(new ErrorResponse("Product with id " + id + " or Category with id " + createProductRequest.getCategoryId() +" does not exist."));
         }
     }
     @DeleteMapping("/{id}")
