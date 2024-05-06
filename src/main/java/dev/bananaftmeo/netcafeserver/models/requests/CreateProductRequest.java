@@ -2,7 +2,6 @@ package dev.bananaftmeo.netcafeserver.models.requests;
 
 import com.google.firebase.database.annotations.NotNull;
 
-import dev.bananaftmeo.netcafeserver.models.ProductCategory;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
