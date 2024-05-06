@@ -49,7 +49,7 @@ public class UserService implements IUserService, UserDetailsService {
                 registerRequest.getPhoneNumber(),
                 registerRequest.getIdentityNumber(),
                 passwordEncoder.encode(registerRequest.getPassword()),
-                RoleEnum.USER, null);
+                RoleEnum.USER, null, null);
         userRepository.save(user);
     }
 
