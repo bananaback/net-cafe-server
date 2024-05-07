@@ -21,6 +21,8 @@ public class CreateProductRequest {
     private float price;
     @NotNull
     private int remainQuantity;
+    @NotBlank(message = "Product image could not be blank.")
+    private String productImageLink;
     @NotNull
     private Long categoryId;
 }

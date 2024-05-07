@@ -32,6 +32,7 @@ public class ProductService implements IProductService {
         newProduct.setDescription(request.getDescription());
         newProduct.setPrice(request.getPrice());
         newProduct.setRemainQuantity(request.getRemainQuantity());
+        newProduct.setProductImageLink(request.getProductImageLink());
         ProductCategory category = productCategoryService.getProductCategoryById(request.getCategoryId());
         newProduct.setProductCategory(category);
         productRepository.save(newProduct);
@@ -61,6 +62,7 @@ public class ProductService implements IProductService {
         existingProduct.setName(request.getName());
         existingProduct.setPrice(request.getPrice());
         existingProduct.setRemainQuantity(request.getRemainQuantity());
+        existingProduct.setProductImageLink(request.getProductImageLink());
         ProductCategory category = productCategoryService.getProductCategoryById(request.getCategoryId());
         existingProduct.setProductCategory(category);
         productRepository.save(existingProduct);
