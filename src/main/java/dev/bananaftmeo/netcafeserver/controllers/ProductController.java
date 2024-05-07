@@ -23,8 +23,6 @@ import dev.bananaftmeo.netcafeserver.services.productservices.IProductService;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-
 
 @RestController
 @RequestMapping("api/products")
@@ -47,9 +45,11 @@ public class ProductController {
             return ResponseEntity.badRequest().body(new ErrorResponse(ex.getErrorMessage()));
         } catch (NoSuchElementException ex) {
             return ResponseEntity.badRequest()
-                    .body(new ErrorResponse("Product category with id " + request.getCategoryId() + " does not exist."));
+                    .body(new ErrorResponse(
+                            "Product category with id " + request.getCategoryId() + " does not exist."));
         }
     }
+
     @GetMapping
     public ResponseEntity<?> getAllProducts() {
         List<Product> products = productService.getAllProducts();
@@ -57,7 +57,7 @@ public class ProductController {
     }
 
     @GetMapping("/category/{categoryId}")
-    public ResponseEntity<?> getProductsByProductCategory(@PathVariable Long categoryId){
+    public ResponseEntity<?> getProductsByProductCategory(@PathVariable Long categoryId) {
         try {
             List<Product> products = productService.getProductsByCategoryId(categoryId);
             return ResponseEntity.ok().body(products);
@@ -66,8 +66,9 @@ public class ProductController {
                     .body(new ErrorResponse("Product category with id " + categoryId + " does not exist"));
         }
     }
+
     @GetMapping("/{id}")
-    public ResponseEntity<?> getProductById(@PathVariable Long id){
+    public ResponseEntity<?> getProductById(@PathVariable Long id) {
         try {
             Product product = productService.getProductById(id);
             return ResponseEntity.ok().body(product);
@@ -76,6 +77,7 @@ public class ProductController {
                     .body(new ErrorResponse("Product with id " + id + " does not exist."));
         }
     }
+
     @PutMapping("/{id}")
     public ResponseEntity<?> updateProduct(@PathVariable Long id,
             @Validated @RequestBody CreateProductRequest createProductRequest,
@@ -90,9 +92,11 @@ public class ProductController {
             return ResponseEntity.ok().body("Update product successfully.");
         } catch (NoSuchElementException ex) {
             return ResponseEntity.badRequest()
-                    .body(new ErrorResponse("Product with id " + id + " or Category with id " + createProductRequest.getCategoryId() +" does not exist."));
+                    .body(new ErrorResponse("Product with id " + id + " or Category with id "
+                            + createProductRequest.getCategoryId() + " does not exist."));
         }
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
         try {

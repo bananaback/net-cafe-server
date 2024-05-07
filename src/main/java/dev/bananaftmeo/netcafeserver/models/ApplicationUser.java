@@ -56,6 +56,9 @@ public class ApplicationUser implements UserDetails {
     @OneToMany(mappedBy = "user")
     Set<RefreshToken> refreshTokens;
 
+    @OneToMany(mappedBy = "user")
+    Set<Order> orders;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority(role.name()));

@@ -2,8 +2,6 @@ package dev.bananaftmeo.netcafeserver.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.cloud.Binding;
-
 import dev.bananaftmeo.netcafeserver.exceptions.ProductCategoryCreationException;
 import dev.bananaftmeo.netcafeserver.models.ProductCategory;
 import dev.bananaftmeo.netcafeserver.models.requests.CreateProductCategoryRequest;
@@ -26,12 +24,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("api/productcategories")
 public class ProductCategoryController {
-    
+
     @Autowired
     private IProductCategoryService productCategoryService;
 

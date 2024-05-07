@@ -9,8 +9,6 @@ import dev.bananaftmeo.netcafeserver.exceptions.ProductCreationException;
 import dev.bananaftmeo.netcafeserver.models.Product;
 import dev.bananaftmeo.netcafeserver.models.ProductCategory;
 import dev.bananaftmeo.netcafeserver.models.requests.CreateProductRequest;
-import dev.bananaftmeo.netcafeserver.models.responses.ProductCategoriesResponse;
-import dev.bananaftmeo.netcafeserver.repositories.ProductCategoryRepository;
 import dev.bananaftmeo.netcafeserver.repositories.ProductRepository;
 import dev.bananaftmeo.netcafeserver.services.productcategoryservices.ProductCategoryService;
 
@@ -22,11 +20,11 @@ public class ProductService implements IProductService {
 
     @Autowired
     private ProductCategoryService productCategoryService;
-    
+
     @Override
     public void createProduct(CreateProductRequest request) throws ProductCreationException {
         Product existingProduct = productRepository.findByName(request.getName());
-        if(existingProduct != null) {
+        if (existingProduct != null) {
             throw new ProductCreationException("Product with name " + existingProduct.getName() + " already exists)");
         }
         Product newProduct = new Product();
@@ -73,5 +71,5 @@ public class ProductService implements IProductService {
         Product existingProduct = productRepository.findById(id).get();
         productRepository.delete(existingProduct);
     }
-    
+
 }

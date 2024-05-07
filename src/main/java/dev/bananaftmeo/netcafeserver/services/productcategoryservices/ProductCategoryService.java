@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dev.bananaftmeo.netcafeserver.exceptions.ProductCategoryCreationException;
-import dev.bananaftmeo.netcafeserver.models.Product;
 import dev.bananaftmeo.netcafeserver.models.ProductCategory;
 import dev.bananaftmeo.netcafeserver.models.requests.CreateProductCategoryRequest;
 import dev.bananaftmeo.netcafeserver.repositories.ProductCategoryRepository;
