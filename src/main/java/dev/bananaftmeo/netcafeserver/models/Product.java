@@ -35,6 +35,8 @@ public class Product {
     private float price;
     @Column(nullable = false, unique = false)
     private int remainQuantity;
+    @Column(nullable = false)
+    private String productImageLink;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private ProductCategory productCategory;
