@@ -1,7 +1,5 @@
 package dev.bananaftmeo.netcafeserver.models.responses;
 
-import com.fasterxml.jackson.databind.ser.std.StdArraySerializers.LongArraySerializer;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,4 +16,5 @@ public class UserResponse {
     private boolean isSuccess;
     private String accessToken;
     private String refreshToken;
+    private float pricePerHour;
 }

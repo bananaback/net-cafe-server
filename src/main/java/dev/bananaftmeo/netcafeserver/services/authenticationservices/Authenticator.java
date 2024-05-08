@@ -51,6 +51,7 @@ public class Authenticator {
 
         return new AuthenticatedUserResponse(true, accessToken, refreshToken);
     }
+
     public UserResponse authenticate1(ApplicationUser user) throws UserAuthenticationException {
         String accessToken = accessTokenGenerator.generateToken(user);
         String refreshToken = refreshTokenGenerator.generateToken(user);
@@ -78,6 +79,7 @@ public class Authenticator {
                     "The entity uses optimistic locking and has a version attribute with a different value from that found in the persistence store or the entity is assumed to be present but does not exist in the database.");
         }
 
-        return new UserResponse(user.getId(), user.getBalance(), user.getUsername(),true, accessToken, refreshToken);
+        return new UserResponse(user.getId(), user.getBalance(), user.getUsername(), true, accessToken, refreshToken,
+                0.f);
     }
 }

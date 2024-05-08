@@ -7,6 +7,8 @@ import dev.bananaftmeo.netcafeserver.models.responses.UserResponse;
 
 public interface IAuthenticationService {
     public AuthenticatedUserResponse loginUser(LoginRequest loginRequest) throws UserAuthenticationException;
-    public UserResponse loginWithUserInfo(LoginRequest loginRequest) throws UserAuthenticationException;
+
+    public UserResponse loginWithUserInfo(LoginRequest loginRequest, Long computerId)
+            throws UserAuthenticationException;
 
 }
