@@ -15,7 +15,10 @@ import dev.bananaftmeo.netcafeserver.models.responses.UserResponse;
 import dev.bananaftmeo.netcafeserver.services.authenticationservices.IAuthenticationService;
 import dev.bananaftmeo.netcafeserver.services.refreshtokenservices.IRefreshTokenService;
 import dev.bananaftmeo.netcafeserver.services.userservices.IUserService;
+import dev.bananaftmeo.netcafeserver.services.usersessionservices.IUserSessionService;
 import dev.bananaftmeo.netcafeserver.utils.tokenvalidators.RefreshTokenValidator;
+
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +29,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -41,6 +45,8 @@ public class AuthenticationController {
     private RefreshTokenValidator refreshTokenValidator;
     @Autowired
     private IRefreshTokenService refreshTokenService;
+    @Autowired
+    private IUserSessionService userSessionService;
 
     @GetMapping("/hittest")
     public ResponseEntity<?> testReached() {
@@ -93,22 +99,38 @@ public class AuthenticationController {
         }
     }
 
-    @PostMapping("/loginwithuserinfo")
-    public ResponseEntity<?> loginWithUserInfo(@Validated @RequestBody LoginRequest loginRequest, BindingResult bindingResult) {
+    @PostMapping("/loginwithuserinfo/{computerId}")
+    public ResponseEntity<?> loginWithUserInfo(@Validated @RequestBody LoginRequest loginRequest,
+            @PathVariable Long computerId,
+            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             // Handle validation errors
             return ResponseEntity.badRequest()
                     .body(new ErrorResponse("Validation error: " + bindingResult.getAllErrors()));
         }
         try {
-            UserResponse authenticatedUserResponse = authenticationService.loginWithUserInfo(loginRequest);
+            UserResponse authenticatedUserResponse = authenticationService.loginWithUserInfo(loginRequest, computerId);
             if (authenticatedUserResponse.isSuccess()) {
                 return ResponseEntity.ok().body(authenticatedUserResponse);
             } else {
                 return ResponseEntity.badRequest().body(new ErrorResponse("Login failed: invalid credentials."));
             }
+        } catch (NoSuchElementException ex) {
+            return ResponseEntity.badRequest()
+                    .body(new ErrorResponse("Login with user info failed, computer with that id not found."));
         } catch (UserAuthenticationException e) {
             return ResponseEntity.badRequest().body(new ErrorResponse("Login failed: " + e.getErrrorMessage()));
+        }
+    }
+
+    @DeleteMapping("/logout/{userId}")
+    public ResponseEntity<String> logoutUser(@PathVariable Long userId) {
+        // Logic to find user session and set status to FINISHED
+        boolean success = userSessionService.logoutUser(userId);
+        if (success) {
+            return new ResponseEntity<>("User logged out successfully.", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("User session not found or already finished.", HttpStatus.NOT_FOUND);
         }
     }
 
@@ -156,4 +178,5 @@ public class AuthenticationController {
         }
 
     }
+
 }
