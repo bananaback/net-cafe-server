@@ -42,7 +42,7 @@ public class OrderItemController {
         }
         try {
             orderItemService.createOrderItem(request);
-            return ResponseEntity.ok().body("Order item created successfully.");
+            return ResponseEntity.ok().body("Order item for order has Id " + request.getOrderId() + " created successfully.");
         } catch (OrderItemCreationException ex) {
             return ResponseEntity.badRequest().body(new ErrorResponse(ex.getErrorMessage()));
         }

@@ -11,6 +11,7 @@ import dev.bananaftmeo.netcafeserver.models.requests.RefreshRequest;
 import dev.bananaftmeo.netcafeserver.models.requests.RegisterRequest;
 import dev.bananaftmeo.netcafeserver.models.responses.AuthenticatedUserResponse;
 import dev.bananaftmeo.netcafeserver.models.responses.ErrorResponse;
+import dev.bananaftmeo.netcafeserver.models.responses.UserResponse;
 import dev.bananaftmeo.netcafeserver.services.authenticationservices.IAuthenticationService;
 import dev.bananaftmeo.netcafeserver.services.refreshtokenservices.IRefreshTokenService;
 import dev.bananaftmeo.netcafeserver.services.userservices.IUserService;
@@ -82,6 +83,25 @@ public class AuthenticationController {
         }
         try {
             AuthenticatedUserResponse authenticatedUserResponse = authenticationService.loginUser(loginRequest);
+            if (authenticatedUserResponse.isSuccess()) {
+                return ResponseEntity.ok().body(authenticatedUserResponse);
+            } else {
+                return ResponseEntity.badRequest().body(new ErrorResponse("Login failed: invalid credentials."));
+            }
+        } catch (UserAuthenticationException e) {
+            return ResponseEntity.badRequest().body(new ErrorResponse("Login failed: " + e.getErrrorMessage()));
+        }
+    }
+
+    @PostMapping("/loginwithuserinfo")
+    public ResponseEntity<?> loginWithUserInfo(@Validated @RequestBody LoginRequest loginRequest, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            // Handle validation errors
+            return ResponseEntity.badRequest()
+                    .body(new ErrorResponse("Validation error: " + bindingResult.getAllErrors()));
+        }
+        try {
+            UserResponse authenticatedUserResponse = authenticationService.loginWithUserInfo(loginRequest);
             if (authenticatedUserResponse.isSuccess()) {
                 return ResponseEntity.ok().body(authenticatedUserResponse);
             } else {

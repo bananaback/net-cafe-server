@@ -32,6 +32,7 @@ public class DbInitializer implements CommandLineRunner {
             user.setUsername("bananaback");
             user.setPasswordHash(passwordEncoder.encode("bananaback")); // Encode the password
             user.setIdentityNumber("1234567889");
+            user.setBalance(0.0);
             user.setPhoneNumber("0347439367");
             user.setRole(RoleEnum.ADMIN);
             // Set other properties if needed

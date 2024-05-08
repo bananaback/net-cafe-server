@@ -1,6 +1,7 @@
 package dev.bananaftmeo.netcafeserver.models.requests;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,5 +20,7 @@ public class RegisterRequest {
     private String email;
     @NotBlank(message = "Identity number cannot be blank")
     private String identityNumber;
+    @NotNull(message = "balance cannot be null")
+    private Double balance;
 
 }

@@ -48,6 +48,7 @@ public class UserService implements IUserService, UserDetailsService {
                 registerRequest.getEmail(),
                 registerRequest.getPhoneNumber(),
                 registerRequest.getIdentityNumber(),
+                registerRequest.getBalance(),
                 passwordEncoder.encode(registerRequest.getPassword()),
                 RoleEnum.USER, null, null, null);
         userRepository.save(user);

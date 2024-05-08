@@ -47,6 +47,9 @@ public class ApplicationUser implements UserDetails {
     @Column(nullable = false, unique = true)
     private String identityNumber;
 
+    @Column(nullable = false, unique = false)
+    private Double balance;
+
     @Column(nullable = false)
     private String passwordHash;
 

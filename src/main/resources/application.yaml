@@ -1,8 +1,8 @@
 spring:
     datasource:
         url: jdbc:sqlserver://localhost:1433;databaseName=netcafeserverdb;TrustServerCertificate=True;;
-        username: sa
-        password: sqlserverdeveloper
+        username: sonhung
+        password: 1
         driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     jpa:
         show-sql: true
