@@ -41,6 +41,16 @@ public class OrderController {
         }
     }
 
+    @PostMapping("/{id}")
+    public ResponseEntity<?> createOrder(@PathVariable Long id) {
+        try {
+            OrderDTO orderDTO = orderService.createOrder(id);
+            return ResponseEntity.ok().body(orderDTO);
+        } catch (OrderCreationException ex) {
+            return ResponseEntity.badRequest().body(new ErrorResponse("Order creation failed:" + ex.getErrorMessage()));
+        }
+    }
+
     @GetMapping
     public ResponseEntity<OrdersResponse> getAllOrders() {
         List<OrderDTO> orders = orderService.getAllOrders();

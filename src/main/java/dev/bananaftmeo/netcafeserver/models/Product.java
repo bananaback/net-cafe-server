@@ -40,7 +40,4 @@ public class Product {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private ProductCategory productCategory;
-
-    @OneToMany(mappedBy = "product")
-    Set<OrderItem> orderItems;
 }

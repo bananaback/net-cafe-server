@@ -59,6 +59,9 @@ public class ApplicationUser implements UserDetails {
     @OneToMany(mappedBy = "user")
     Set<Order> orders;
 
+    @OneToMany(mappedBy = "user")
+    Set<Message> messages;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority(role.name()));
