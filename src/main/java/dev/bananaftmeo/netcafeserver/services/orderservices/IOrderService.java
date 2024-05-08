@@ -15,6 +15,8 @@ public interface IOrderService {
 
     List<OrderDTO> getAllOrders();
 
+    List<OrderDTO> getOrdersByUserId(Long userId);
+
     OrderDTO getOrderById(Long id);
 
     void updateOrderStatus(Long id, UpdateOrderStatusRequest request);

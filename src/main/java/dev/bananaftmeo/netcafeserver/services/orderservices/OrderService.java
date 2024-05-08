@@ -38,6 +38,7 @@ public class OrderService implements IOrderService {
                     "User with username" + authentication.getPrincipal() + " not found.");
         }
     }
+
     @Override
     public OrderDTO createOrder(Long userId) throws OrderCreationException {
         ApplicationUser existingUser = userRepository.findById(userId).get();
@@ -52,12 +53,17 @@ public class OrderService implements IOrderService {
             throw new OrderCreationException(
                     "User with userid" + userId + " not found.");
         }
-        
+
     }
 
     @Override
     public List<OrderDTO> getAllOrders() {
         return orderRepository.findAllOrders();
+    }
+
+    @Override
+    public List<OrderDTO> getOrdersByUserId(Long userId) {
+        return orderRepository.findOrdersByUserId(userId);
     }
 
     @Override
