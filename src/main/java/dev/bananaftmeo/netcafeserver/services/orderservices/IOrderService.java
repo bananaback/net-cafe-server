@@ -11,6 +11,8 @@ import dev.bananaftmeo.netcafeserver.models.requests.UpdateOrderStatusRequest;
 public interface IOrderService {
     void createOrder(Authentication authentication) throws OrderCreationException;
 
+    OrderDTO createOrder(Long userId) throws OrderCreationException;
+
     List<OrderDTO> getAllOrders();
 
     OrderDTO getOrderById(Long id);

@@ -38,6 +38,22 @@ public class OrderService implements IOrderService {
                     "User with username" + authentication.getPrincipal() + " not found.");
         }
     }
+    @Override
+    public OrderDTO createOrder(Long userId) throws OrderCreationException {
+        ApplicationUser existingUser = userRepository.findById(userId).get();
+        if (existingUser != null) {
+            Order order = new Order();
+            order.setUser(existingUser);
+            order.setOrderStatus(OrderStatusEnum.PENDING);
+            order.setTimeCreated(LocalDateTime.now());
+            orderRepository.save(order);
+            return new OrderDTO(order.getId(), order.getTimeCreated(), order.getOrderStatus());
+        } else {
+            throw new OrderCreationException(
+                    "User with userid" + userId + " not found.");
+        }
+        
+    }
 
     @Override
     public List<OrderDTO> getAllOrders() {

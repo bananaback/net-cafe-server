@@ -27,6 +27,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/auth/refresh").permitAll()
                 .requestMatchers("/api/products/**").permitAll()
                 .requestMatchers("/api/productcategories").permitAll()
+                .requestMatchers("/api/orders/**").permitAll()
                 .anyRequest().authenticated())
                 .csrf(csrf -> csrf.disable())
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
