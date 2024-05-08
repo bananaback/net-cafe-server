@@ -11,4 +11,7 @@ public interface IUserSessionService {
     UserSession changeSessionStatus(UserSession userSession, UserSessionEnum newStatus);
 
     boolean logoutUser(Long userId);
+
+    void deductBalancesForOngoingSessions();
+
 }
