@@ -72,6 +72,11 @@ public class OrderItemService implements IOrderItemService {
     }
 
     @Override
+    public List<OrderItemDTO> getAllOrderItemsOfOrder(Long orderId) {
+        return orderItemRepository.findAllOrderItemDTOsByOrderId(orderId);
+    }
+
+    @Override
     public OrderItemDTO getOrderItemById(Long productId, Long orderId) {
         OrderItemDTO orderItemDTO = orderItemRepository.findOrderItemDTOByProductIdAndOrderId(productId, orderId);
         if (orderItemDTO == null) {

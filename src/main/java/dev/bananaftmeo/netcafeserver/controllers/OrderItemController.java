@@ -42,7 +42,8 @@ public class OrderItemController {
         }
         try {
             orderItemService.createOrderItem(request);
-            return ResponseEntity.ok().body("Order item for order has Id " + request.getOrderId() + " created successfully.");
+            return ResponseEntity.ok()
+                    .body("Order item for order has Id " + request.getOrderId() + " created successfully.");
         } catch (OrderItemCreationException ex) {
             return ResponseEntity.badRequest().body(new ErrorResponse(ex.getErrorMessage()));
         }
@@ -95,4 +96,16 @@ public class OrderItemController {
                     .body(new ErrorResponse(ex.getMessage()));
         }
     }
+
+    @GetMapping("/order/{orderId}")
+    public ResponseEntity<?> getAllOrderItemsOfOrder(@PathVariable Long orderId) {
+        try {
+            List<OrderItemDTO> orderItems = orderItemService.getAllOrderItemsOfOrder(orderId);
+            return ResponseEntity.ok().body(new OrderItemsResponse(orderItems));
+        } catch (NoSuchElementException ex) {
+            return ResponseEntity.badRequest()
+                    .body(new ErrorResponse("Order with ID " + orderId + " does not exist."));
+        }
+    }
+
 }
