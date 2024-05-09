@@ -11,6 +11,17 @@ spring:
         properties:
             hibernate:
                 dialect: org.hibernate.dialect.SQLServerDialect
+    mail:
+        host: smtp.gmail.com
+        port: 587
+        username: votrongtinxettuyenute@gmail.com
+        password: uqujfzqfogeqeevf
+        protocol: smtp
+        tls: true
+        properties.mail.smtp:
+            auth: true
+            starttls.enable: true
+            ssl.trust: smtp.gmail.com
 
 jwt:
     access_token:
@@ -19,3 +30,4 @@ jwt:
     refresh_token:
         secret: "zp7iA9kBvZ1Pz2AmsXgtXr3dGcQE6hZPHn4jfexj1gk-geBRH7Cwq1-X0bDrNdGXR4jZ7EjNCRNz4kn1Tp8bMvOqUAeeYyVgWQc0eDFk8hbKACc7YW_r7Dgtby6W0gQEPpL4QVvldb2aoI-6eaxUwGV6OrJrf7lWrotytJzUYIE"
         expiration_minutes: 80803
+

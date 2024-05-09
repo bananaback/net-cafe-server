@@ -89,7 +89,7 @@ public class UserService implements IUserService, UserDetailsService {
     @Override
     public UserInfoResponse updateUserInfo(Long userId, UserInfoResponse userInfoResponse) {
         ApplicationUser user = userRepository.findById(userId).get();
-        user.setBalance(userInfoResponse.getBalance());
+        user.setBalance(user.getBalance() + userInfoResponse.getBalance());
         userRepository.save(user);
         return userInfoResponse;
     }
