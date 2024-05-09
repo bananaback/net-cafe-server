@@ -13,7 +13,6 @@ import dev.bananaftmeo.netcafeserver.models.Product;
 import dev.bananaftmeo.netcafeserver.models.Order;
 import dev.bananaftmeo.netcafeserver.models.dtos.OrderItemDTO;
 import dev.bananaftmeo.netcafeserver.models.requests.CreateOrderItemRequest;
-import dev.bananaftmeo.netcafeserver.models.responses.OrderPrice;
 import dev.bananaftmeo.netcafeserver.repositories.OrderItemRepository;
 import dev.bananaftmeo.netcafeserver.repositories.OrderRepository;
 import dev.bananaftmeo.netcafeserver.repositories.ProductRepository;
@@ -59,8 +58,16 @@ public class OrderItemService implements IOrderItemService {
             orderItem.setQuantity(createOrderItemRequest.getQuantity());
             orderItem.setSinglePrice(product.getPrice());
 
+            // Decrease the product quantity
+            int newQuantity = product.getRemainQuantity() - createOrderItemRequest.getQuantity();
+            if (newQuantity < 0) {
+                newQuantity = 0; // Set the quantity to 0 if it's negative
+            }
+            product.setRemainQuantity(newQuantity);
+
             // Save the order item
             orderItemRepository.save(orderItem);
+            productRepository.save(product);
         } catch (NoSuchElementException ex) {
             throw new OrderItemCreationException("Product with product id " + createOrderItemRequest.getProductId()
                     + " or order with order id " + createOrderItemRequest.getOrderId() + " not found.");
@@ -87,8 +94,6 @@ public class OrderItemService implements IOrderItemService {
         return orderItemDTO;
     }
 
-
-    
     @Override
     public void updateOrderItem(Long productId, Long orderId, CreateOrderItemRequest updateRequest) {
         try {
@@ -133,7 +138,7 @@ public class OrderItemService implements IOrderItemService {
         List<OrderItemDTO> orderItems = orderItemRepository.findOrderItemByOrderId(orderId);
         if (orderItems == null) {
             throw new NoSuchElementException(
-                    "Order item with order id "+ orderId + " not found");
+                    "Order item with order id " + orderId + " not found");
         }
         return orderItems;
     }
