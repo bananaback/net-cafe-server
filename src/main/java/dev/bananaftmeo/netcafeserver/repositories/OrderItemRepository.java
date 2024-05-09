@@ -22,4 +22,10 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, OrderItemI
             "FROM OrderItem oi " +
             "JOIN oi.product p")
     List<OrderItemDTO> findAllOrderItemDTOs();
+
+    @Query("SELECT new dev.bananaftmeo.netcafeserver.models.dtos.OrderItemDTO(oi.quantity, oi.product.price, oi.product.id, oi.order.id) "
+    +
+    "FROM OrderItem oi " +
+    "WHERE oi.order.id = :orderId")
+        List<OrderItemDTO> findOrderItemByOrderId(Long orderId);
 }

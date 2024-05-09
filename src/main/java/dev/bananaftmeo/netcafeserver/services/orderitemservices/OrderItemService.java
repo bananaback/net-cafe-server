@@ -13,6 +13,7 @@ import dev.bananaftmeo.netcafeserver.models.Product;
 import dev.bananaftmeo.netcafeserver.models.Order;
 import dev.bananaftmeo.netcafeserver.models.dtos.OrderItemDTO;
 import dev.bananaftmeo.netcafeserver.models.requests.CreateOrderItemRequest;
+import dev.bananaftmeo.netcafeserver.models.responses.OrderPrice;
 import dev.bananaftmeo.netcafeserver.repositories.OrderItemRepository;
 import dev.bananaftmeo.netcafeserver.repositories.OrderRepository;
 import dev.bananaftmeo.netcafeserver.repositories.ProductRepository;
@@ -81,6 +82,8 @@ public class OrderItemService implements IOrderItemService {
         return orderItemDTO;
     }
 
+
+    
     @Override
     public void updateOrderItem(Long productId, Long orderId, CreateOrderItemRequest updateRequest) {
         try {
@@ -118,6 +121,16 @@ public class OrderItemService implements IOrderItemService {
             throw new NoSuchElementException(
                     "Order item with product id " + productId + " and order id " + orderId + " not found");
         }
+    }
+
+    @Override
+    public List<OrderItemDTO> getOrderItemByOrderId(Long orderId) {
+        List<OrderItemDTO> orderItems = orderItemRepository.findOrderItemByOrderId(orderId);
+        if (orderItems == null) {
+            throw new NoSuchElementException(
+                    "Order item with order id "+ orderId + " not found");
+        }
+        return orderItems;
     }
 
 }
