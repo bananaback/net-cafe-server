@@ -30,9 +30,11 @@ public class SecurityConfig {
                 .requestMatchers("/api/products/**").permitAll()
                 .requestMatchers("/api/productcategories").permitAll()
                 .requestMatchers("/api/orders/**").permitAll()
-                .requestMatchers("/api/rooms").permitAll()
-                .requestMatchers("/api/computers").permitAll()
                 .requestMatchers("/api/orderitems/**").permitAll()
+                .requestMatchers("/api/rooms").permitAll()
+                .requestMatchers("/api/computers/**").permitAll()
+                .requestMatchers("/api/sessions/**").permitAll()
+                .requestMatchers("/api/users/**").permitAll()
                 .anyRequest().authenticated())
                 .csrf(csrf -> csrf.disable())
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);

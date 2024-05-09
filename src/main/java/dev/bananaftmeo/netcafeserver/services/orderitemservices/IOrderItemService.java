@@ -13,6 +13,8 @@ public interface IOrderItemService {
 
     List<OrderItemDTO> getAllOrderItems();
 
+    List<OrderItemDTO> getAllOrderItemsOfOrder(Long orderId);
+
     OrderItemDTO getOrderItemById(Long productId, Long orderId);
 
     List<OrderItemDTO> getOrderItemByOrderId(Long orderId);

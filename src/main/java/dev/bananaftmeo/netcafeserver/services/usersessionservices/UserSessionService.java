@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import dev.bananaftmeo.netcafeserver.models.ApplicationUser;
 import dev.bananaftmeo.netcafeserver.models.Computer;
 import dev.bananaftmeo.netcafeserver.models.UserSession;
+import dev.bananaftmeo.netcafeserver.models.responses.UserSessionResponse;
 import dev.bananaftmeo.netcafeserver.enums.UserSessionEnum;
 import dev.bananaftmeo.netcafeserver.repositories.UserRepository;
 import dev.bananaftmeo.netcafeserver.repositories.UserSessionRepository;
@@ -87,5 +88,10 @@ public class UserSessionService implements IUserSessionService {
             // Save the updated user
             userRepository.save(user);
         }
+    }
+
+    @Override
+    public List<UserSessionResponse> getLatestSessionsByComputerIds(List<Long> computerIds) {
+        return userSessionRepository.findLatestByComputerIds(computerIds);
     }
 }

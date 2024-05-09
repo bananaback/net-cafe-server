@@ -1,5 +1,8 @@
 package dev.bananaftmeo.netcafeserver.services.userservices;
 
+import java.util.List;
+import java.util.NoSuchElementException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,6 +14,7 @@ import dev.bananaftmeo.netcafeserver.enums.RoleEnum;
 import dev.bananaftmeo.netcafeserver.exceptions.UserRegistrationException;
 import dev.bananaftmeo.netcafeserver.models.ApplicationUser;
 import dev.bananaftmeo.netcafeserver.models.requests.RegisterRequest;
+import dev.bananaftmeo.netcafeserver.models.responses.UserInfoResponse;
 import dev.bananaftmeo.netcafeserver.repositories.UserRepository;
 
 @Service
@@ -66,6 +70,28 @@ public class UserService implements IUserService, UserDetailsService {
     @Override
     public ApplicationUser findUserByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public UserInfoResponse getUserInfoById(Long id) {
+        UserInfoResponse userInfoResponse = userRepository.findUserById(id);
+        if (userInfoResponse == null) {
+            throw new NoSuchElementException("User with id " + id + " not found.");
+        }
+        return userInfoResponse;
+    }
+
+    @Override
+    public List<UserInfoResponse> getAllUserInfo() {
+        return userRepository.findAllUsers();
+    }
+
+    @Override
+    public UserInfoResponse updateUserInfo(Long userId, UserInfoResponse userInfoResponse) {
+        ApplicationUser user = userRepository.findById(userId).get();
+        user.setBalance(userInfoResponse.getBalance());
+        userRepository.save(user);
+        return userInfoResponse;
     }
 
 }
