@@ -3,6 +3,10 @@ package dev.bananaftmeo.netcafeserver.services.usersessionservices;
 import dev.bananaftmeo.netcafeserver.models.ApplicationUser;
 import dev.bananaftmeo.netcafeserver.models.Computer;
 import dev.bananaftmeo.netcafeserver.models.UserSession;
+import dev.bananaftmeo.netcafeserver.models.responses.UserSessionResponse;
+
+import java.util.List;
+
 import dev.bananaftmeo.netcafeserver.enums.UserSessionEnum;
 
 public interface IUserSessionService {
@@ -14,4 +18,5 @@ public interface IUserSessionService {
 
     void deductBalancesForOngoingSessions();
 
+    List<UserSessionResponse> getLatestSessionsByComputerIds(List<Long> computerIds);
 }

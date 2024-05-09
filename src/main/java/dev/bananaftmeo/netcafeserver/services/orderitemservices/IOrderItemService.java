@@ -12,6 +12,8 @@ public interface IOrderItemService {
 
     List<OrderItemDTO> getAllOrderItems();
 
+    List<OrderItemDTO> getAllOrderItemsOfOrder(Long orderId);
+
     OrderItemDTO getOrderItemById(Long productId, Long orderId);
 
     void updateOrderItem(Long productId, Long orderId, CreateOrderItemRequest productCategory);
