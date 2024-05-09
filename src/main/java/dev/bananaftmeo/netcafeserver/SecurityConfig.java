@@ -35,6 +35,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/computers/**").permitAll()
                 .requestMatchers("/api/sessions/**").permitAll()
                 .requestMatchers("/api/users/**").permitAll()
+                .requestMatchers("/api/email/**").permitAll()
                 .anyRequest().authenticated())
                 .csrf(csrf -> csrf.disable())
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
