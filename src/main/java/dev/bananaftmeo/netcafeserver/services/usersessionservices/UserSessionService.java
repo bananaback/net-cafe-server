@@ -72,7 +72,7 @@ public class UserSessionService implements IUserSessionService {
             long minutes = Duration.between(checkinTime, now).toMinutes();
 
             float pricePerHour = session.getComputer().getPricePerHour();
-            double deduction = (pricePerHour / 60) * minutes;
+            double deduction = (pricePerHour / 60);
 
             ApplicationUser user = session.getUser();
             double currentBalance = user.getBalance();

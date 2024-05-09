@@ -66,6 +66,17 @@ public class OrderItemController {
                             + " does not exist."));
         }
     }
+    @GetMapping("/{orderId}")
+    public ResponseEntity<?> getOrderItemByOrderId(@PathVariable Long orderId) {
+        try {
+            List<OrderItemDTO> orderItems = orderItemService.getOrderItemByOrderId(orderId);
+            return ResponseEntity.ok().body(orderItems);
+        } catch (NoSuchElementException ex) {
+            return ResponseEntity.badRequest()
+                    .body(new ErrorResponse("Order item with order id " + orderId
+                            + " does not exist."));
+        }
+    }
 
     @PutMapping("/{productId}/{orderId}")
     public ResponseEntity<?> updateOrderItem(@PathVariable Long productId, @PathVariable Long orderId,
