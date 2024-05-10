@@ -1,9 +1,15 @@
 package dev.bananaftmeo.netcafeserver.services.messageservices;
 
-import dev.bananaftmeo.netcafeserver.models.requests.SendMessageRequest;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import dev.bananaftmeo.netcafeserver.models.dtos.MessageDTO;
 
 public interface IMessageService {
-    void sendMessage(SendMessageRequest request);
+    List<MessageDTO> getAllMessagesForUserInTimeRange(Long userId, LocalDateTime beginTime,
+            LocalDateTime endTime);
 
-    void getMessages(Long senderId, Long receiverId, String message);
+    void sendMessageForUser(Long userId, String messageContent);
+
+    void sendMessageForAdmin(Long userId, String messageContent);
 }
