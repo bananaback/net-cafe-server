@@ -33,10 +33,10 @@ public class Message {
     @Column(nullable = false)
     private String message;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Long senderId;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Long receiverId;
 
     @ManyToOne(fetch = FetchType.LAZY)
